@@ -1,0 +1,12 @@
+version: '3'
+services:
+    webserver:
+        image: umwapp/webserver
+        ports:
+            - "80:80"
+        volumes:
+            - /tmp:/tmp
+            - /etc/hosts:/etc/hosts
+            - ./Backend:/umwapp
+            - ./Backend/config/apache.dev.conf:/etc/apache2/sites-enabled/000-default.conf
+        entrypoint: "bash -c 'source /etc/apache2/envvars && /usr/sbin/apache2 -D FOREGROUND'"
