@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace TMDb;
 
 /**
  * @author Euclécio Josias Rodrigues <eucjosias@gmail.com>
@@ -22,7 +22,8 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories'  => [
-                TMDb\Getter::class => [TMDb\Getter::class, 'factory'],
+                Handler\UpComing::class => [Handler\UpComing::class, 'factory'],
+                Handler\Genre::class => [Handler\Genre::class, 'factory'],
             ],
         ];
     }

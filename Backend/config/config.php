@@ -24,7 +24,7 @@ $aggregator = new ConfigAggregator([
     class_exists(\Zend\Expressive\Swoole\ConfigProvider::class)
         ? \Zend\Expressive\Swoole\ConfigProvider::class
         : function(){ return[]; },
-    App\ConfigProvider::class,
+    TMDb\ConfigProvider::class,
     new PhpFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.php'),
     new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),
 ], $cacheConfig['config_cache_path']);
