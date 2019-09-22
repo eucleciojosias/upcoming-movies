@@ -24,6 +24,7 @@ class ConfigProvider
             'factories'  => [
                 Handler\UpComing::class => [Handler\UpComing::class, 'factory'],
                 Handler\Genre::class => [Handler\Genre::class, 'factory'],
+                Handler\Details::class => [Handler\Details::class, 'factory'],
             ],
         ];
     }

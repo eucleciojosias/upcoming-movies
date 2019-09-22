@@ -1,11 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 import logo from '../../assets/img/logo.png'
 import { TopHeader, Logo } from './styles'
 
 function Header () {
   return (
     <TopHeader>
-      <Logo src={logo} alt='Umwapp logo' />
+      <Link to='/'>
+        <Logo src={logo} alt='Umwapp logo' />
+      </Link>
     </TopHeader>
   )
 }
