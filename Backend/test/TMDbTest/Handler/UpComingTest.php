@@ -2,29 +2,25 @@
 
 declare(strict_types=1);
 
-namespace AppTest\TMDb;
+namespace TMDbTest\Handler;
 
 /**
  * @author Euclécio Josias Rodrigues <eucjosias@gmail.com>
  */
-class GetterTest extends \PHPUnit\Framework\TestCase
+class UpComingTest extends \PHPUnit\Framework\TestCase
 {
     public function testReturnsJsonResponse_withPageParam()
     {
-        $gateway = $this->prophesize(\App\TMDb\RemoteGateway::class);
+        $gateway = $this->prophesize(\TMDb\Handler\RemoteGateway::class);
         $gateway->request(
+            '/movie/upcoming',
             'GET',
-            'https://api.movie.org/3/movie/upcoming?page=2&language=en-US&api_key=token'
+            ['page' => 2]
         )
         ->shouldBeCalled()
         ->willReturn([]);
 
-        $getter = new \App\TMDb\Getter(
-            [
-                'api_host' => 'https://api.movie.org',
-                'language' => 'en-US',
-                'api_key' => 'token'
-            ],
+        $getter = new \TMDb\Handler\UpComing(
             $gateway->reveal()
         );
 
