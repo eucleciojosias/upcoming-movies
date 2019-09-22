@@ -6,7 +6,7 @@ export const TopHeader = styled.header`
   display: flex;
   justify-content: center;
 
-  > img {
+  img {
     height: 60px;
   }
 `
