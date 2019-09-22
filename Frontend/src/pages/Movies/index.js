@@ -6,6 +6,7 @@ import ApiRequest from '../../service/ApiRequest'
 
 class Movies extends React.Component {
   state = {
+    page: 1,
     loading: true,
     movies: [],
     genres: []
@@ -13,19 +14,36 @@ class Movies extends React.Component {
 
   getGenres = async (id) => {
     const { data } = await ApiRequest.get('get-genres')
-    this.setState({ genres: data.genres, loading: false })
+    this.setState({ genres: data.genres })
   }
 
-  updateMoviesList = async (page) => {
-    const { data } = await ApiRequest.get(['upcoming-movies', page].join('/'))
+  updateMoviesList = async () => {
+    const { data } = await ApiRequest.get(['upcoming-movies', this.state.page].join('/'))
     const movies = [...this.state.movies, ...data.results]
-    this.setState({ movies })
+    this.setState({
+      movies,
+      loading: false,
+      page: (this.state.page + 1)
+    })
+  }
+
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  }
+
+  trackScrolling = () => {
+    const wrappedElement = document.getElementById('root');
+    if (this.isBottom(wrappedElement)) {
+      this.setState({ loading: true })
+      this.updateMoviesList()
+    }
   }
 
   componentDidMount() {
+    document.addEventListener('scroll', this.trackScrolling);
     this.setState({ mounted: true })
-    this.updateMoviesList(1)
     this.getGenres()
+    this.updateMoviesList()
   }
 
   render() {
