@@ -1,32 +1,46 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { Container } from './styles'
 import MovieItem from '../../components/MovieItem'
-import { getUpcoming } from '../../service/TMDb'
+import Loader from '../../components/Loader'
+import ApiRequest from '../../service/ApiRequest'
 
-function Movies () {
-  const [movies, setMovies] = useState([])
-  const [setError] = useState('')
+class Movies extends React.Component {
+  state = {
+    loading: true,
+    movies: [],
+    genres: []
+  }
 
-  const setErrorMsg = useCallback(() => setError("Couldn't fetch server"), [
-    setError
-  ])
+  getGenres = async (id) => {
+    const { data } = await ApiRequest.get('get-genres')
+    this.setState({ genres: data.genres, loading: false })
+  }
 
-  useEffect(() => {
-    const getMoviesList = async () => {
-      const movies = await getUpcoming(setErrorMsg)
-      setMovies(movies.results)
-    }
+  updateMoviesList = async (page) => {
+    const { data } = await ApiRequest.get(['upcoming-movies', page].join('/'))
+    const movies = [...this.state.movies, ...data.results]
+    this.setState({ movies })
+  }
 
-    getMoviesList()
-  }, [setErrorMsg])
+  componentDidMount() {
+    this.setState({ mounted: true })
+    this.updateMoviesList(1)
+    this.getGenres()
+  }
 
-  return (
-    <Container>
-      {movies.map(movie => (
-        <MovieItem key={movie.id} movie={movie} />
-      ))}
-    </Container>
-  )
+  render() {
+    const { movies, genres, loading } = this.state
+    return (
+      <>
+        { loading ? <Loader /> : null }
+        <Container>
+          {movies.length > 0 && movies.map(movie => (
+            <MovieItem key={movie.id} movie={movie} genres={genres} />
+          ))}
+        </Container>
+      </>
+    )
+  }
 }
 
 export default Movies

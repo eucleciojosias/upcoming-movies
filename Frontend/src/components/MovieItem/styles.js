@@ -20,6 +20,10 @@ export const Item = styled.div`
     > div > ul > li {
       color: white;
     }
+
+    > div > ul > li > span {
+      background-color: white;
+    }
   }
 
   > div {
@@ -52,4 +56,13 @@ export const Title = styled.h3`
   text-align: center;
   padding: 10px 0px;
   color: #77777a;
+`
+
+export const Genre = styled.span`
+  background-color: #77777a;
+  color: #333333;
+  padding: 1px 3px;
+  margin: 2px;
+  display: inline-block;
+  border-radius: 4px;
 `
