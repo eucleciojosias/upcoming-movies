@@ -1,4 +1,4 @@
 all: build
 
 build:
-	docker build . -t umwapp/webserver
+	docker build . -t eucleciojosias/umwapp_webserver

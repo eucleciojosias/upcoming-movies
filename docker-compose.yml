@@ -1,7 +1,7 @@
 version: '3'
 services:
     webserver:
-        image: umwapp/webserver
+        image: eucleciojosias/umwapp_webserver
         ports:
             - "80:80"
         volumes:
