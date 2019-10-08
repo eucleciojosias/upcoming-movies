@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game</title>
+</head>
+<script type="text/javascript">
+    const keywords = [
+        'public',
+        'private',
+        'static',
+        'protected',
+        'implement',
+    ]
+    let secRemaining = 300
+    let assert = []
+
+    const interval = setInterval(function() {
+       if (secRemaining > 0) {
+            secRemaining -= 1
+        }
+        updateTime()
+     }, 1000);
+
+    function loadWords() {
+        keywords.map(function(word) {
+            document.getElementById('table').innerHTML += '<tr id="'+word+'"><td>'+word+'</td></tr>'
+        })
+    }
+
+    function updateTime() {
+        var min = secRemaining/60
+        var sec = secRemaining%60
+        if (sec.toString().length == 1) {
+            sec = '0'+sec
+        }
+        document.getElementById('time').innerHTML = Math.ceil(min)+':'+sec
+    }
+
+    function showUp(e) {
+        const filtered = keywords.filter(word => word == e.value)[0]
+        if (filtered && !assert.includes(filtered)) {
+            e.value = ''
+            let el = document.getElementById(filtered)
+            el.className = 'active'
+            assert.push(filtered)
+            document.getElementById('score').innerHTML = assert.length
+        }
+    }
+</script>
+<style type="text/css">
+    #table tr td {
+        background: black;
+        color: black;
+    }
+    #table tr.active td {
+        color: white;
+    }
+</style>
+<body onload="loadWords()">
+    <input type="text" name="keyword" id="keyword" value="" onkeyup="showUp(this)">
+    <label>Time: <span id="time"></span></label>
+    <label>Score: <span id="score">0</span></label>
+    <table id="table">
+    </table>
+</body>
+</html>
